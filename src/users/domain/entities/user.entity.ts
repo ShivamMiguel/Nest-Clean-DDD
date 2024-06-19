@@ -20,12 +20,12 @@ export class UserEntity extends Entity<UserProps> {
   }
   update(value: string): void {
     UserEntity.validate({ ...this.props, name: value })
-    this.name = value
+    this.props.name = value
   }
 
   updatePassword(value: string): void {
     UserEntity.validate({ ...this.props, password: value })
-    this.password = value
+    this.props.password = value
   }
 
   get name() {
@@ -54,7 +54,7 @@ export class UserEntity extends Entity<UserProps> {
   static validate(props: UserProps) {
     const validator = UserValidatorFactory.create()
     const isValid = validator.validate(props)
-    if (isValid) {
+    if (!isValid) {
       throw new EntityValidationError(validator.errors)
     }
   }
